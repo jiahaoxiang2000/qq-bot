@@ -1,4 +1,4 @@
-ncatbot>=1.0.0
+ncatbot>=3.3.1
 python-dotenv>=0.19.0
 watchdog>=2.1.9
 
