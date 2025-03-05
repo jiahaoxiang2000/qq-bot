@@ -24,6 +24,25 @@ bot = BotClient()
 
 @bot.group_event()
 async def on_group_message(msg: GroupMessage):
+    """Asynchronous handler for group messages.
+
+    Processes messages received in groups where the bot is present.
+
+    Parameters
+    ----------
+    msg : GroupMessage
+        The received group message containing:
+        - `sender`: Information about who sent the message, have the user_id, nickname, etc.
+        - `content`: The actual message content
+        - `message`: array of message segments, for meeting the OneBot11 standard
+        - `group_id`: The group where the message was sent
+        - And other metadata
+
+    Notes
+    -----
+    See the official documentation for complete message structure:
+    https://docs.ncatbot.xyz/guide/iloveseu/#%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0
+    """
     _log.info(msg)
 
 
@@ -31,8 +50,17 @@ async def on_group_message(msg: GroupMessage):
 async def on_private_message(msg: PrivateMessage):
     _log.info(msg)
     if msg.raw_message == "测试":
-        await bot.api.post_private_msg(msg.user_id, text="NcatBot 测试成功喵~")
+        await bot.api.post_private_msg(msg.user_id, text="Bot Isomo is work ~^~")
 
+
+# async def on_notice_message(msg):
+#     _log.info(msg)
+
+# async def on_request_message(msg):
+#     _log.info(msg)
+
+# bot.notice_event(on_notice_message)
+# bot.request_event(on_request_message)
 
 if __name__ == "__main__":
     bot.run()
