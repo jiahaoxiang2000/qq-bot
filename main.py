@@ -18,6 +18,14 @@ bot_uin = os.getenv("BOT_UIN", "123456")  # 设置 bot qq 号 (必填)
 ws_uri = os.getenv("WS_URI", "ws://localhost:3001")  # 设置 napcat websocket server 地址
 token = os.getenv("BOT_TOKEN", "")  # 设置 token (napcat 服务器的 token)
 
+# Define groups where advertising filtering should be applied
+# Can be loaded from environment variables or a config file
+AD_FILTERED_GROUPS = (
+    list(map(int, os.getenv("AD_FILTERED_GROUPS", "").split(",")))
+    if os.getenv("AD_FILTERED_GROUPS")
+    else []
+)
+
 config.set_bot_uin(bot_uin)
 config.set_ws_uri(ws_uri)
 config.set_token(token)
@@ -48,8 +56,12 @@ async def on_group_message(msg: GroupMessage):
     """
     _log.info(msg)
 
-    # Check for advertising in message segments
-    if hasattr(msg, "message") and is_advertising_in_segments_enhanced(msg.message):
+    # Check if this group should have ad filtering
+    if (
+        hasattr(msg, "message")
+        and msg.group_id in AD_FILTERED_GROUPS
+        and is_advertising_in_segments_enhanced(msg.message)
+    ):
         _log.warning(
             f"Detected advertising in group {msg.group_id} from {msg.sender.user_id}. Deleting message."
         )
