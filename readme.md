@@ -4,7 +4,7 @@ This project is for create the qq bot to manage the qq group service.
 
 ## architecture
 
-we use to use the bot to manage *group*, but the office bot need the company register, not open to personal. So here we use the [NapCatQQ](https://napneko.github.io/) to open the `websocket` ability by hook the node function. then use the [NcatBot](https://docs.ncatbot.xyz/) to call the all function by the `websocket`.
+we use to use the bot to manage _group_, but the office bot need the company register, not open to personal. So here we use the [NapCatQQ](https://napneko.github.io/) to open the `websocket` ability by hook the node function. then use the [NcatBot](https://docs.ncatbot.xyz/) to call the all function by the `websocket`.
 
 ## Development
 
@@ -20,7 +20,7 @@ we use to use the bot to manage *group*, but the office bot need the company reg
 
 Create a `.env` file in the project root with the following variables:
 
-``` env
+```env
 BOT_UIN=your_bot_qq_number
 WS_URI=ws://localhost:3001
 BOT_TOKEN=your_napcat_token
@@ -87,19 +87,19 @@ sudo apt-get install screen
 sudo yum install screen
 ```
 
-2. Start a new screen session:
+2.Start a new screen session:
 
 ```bash
 screen -S qq-bot
 ```
 
-3. Run the bot:
+3.Run the bot:
 
 ```bash
 python main.py
 ```
 
-4. Detach from the screen session by pressing `Ctrl+A` followed by `D`.
+4.Detach from the screen session by pressing `Ctrl+A` followed by `D`.
 
 To reattach to the session:
 
@@ -109,15 +109,15 @@ screen -r qq-bot
 
 #### Using systemd (Linux)
 
-1. Create a systemd service file:
+1.Create a systemd service file:
 
 ```bash
 sudo nano /etc/systemd/system/qq-bot.service
 ```
 
-2. Add the following content:
+2.Add the following content:
 
-```
+```plaintext
 [Unit]
 Description=QQ Bot Service
 After=network.target
@@ -134,7 +134,7 @@ RestartSec=5s
 WantedBy=multi-user.target
 ```
 
-3. Enable and start the service:
+3.Enable and start the service:
 
 ```bash
 sudo systemctl daemon-reload
@@ -142,13 +142,13 @@ sudo systemctl enable qq-bot
 sudo systemctl start qq-bot
 ```
 
-4. Check the service status:
+4.Check the service status:
 
 ```bash
 sudo systemctl status qq-bot
 ```
 
-5. View logs:
+5.View logs:
 
 ```bash
 sudo journalctl -u qq-bot -f
