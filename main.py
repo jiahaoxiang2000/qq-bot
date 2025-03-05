@@ -4,6 +4,7 @@ from ncatbot.utils.config import config
 from ncatbot.utils.logger import get_log
 import os
 from dotenv import load_dotenv
+from utils.spam_filter import is_advertising_in_segments
 
 # Load environment variables from .env file if present
 load_dotenv()
@@ -44,6 +45,21 @@ async def on_group_message(msg: GroupMessage):
     https://docs.ncatbot.xyz/guide/iloveseu/#%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0
     """
     _log.info(msg)
+
+    # Check for advertising in message segments
+    if hasattr(msg, "message") and is_advertising_in_segments(msg.message):
+        _log.warning(
+            f"Detected advertising in group {msg.group_id} from {msg.sender.user_id}. Deleting message."
+        )
+        await bot.api.delete_msg(msg.message_id)
+
+        # Optionally, you can send a warning to the group
+        await bot.api.post_group_msg(msg.group_id, text="请不要发送广告内容⚡️")
+
+        # Optionally, you can kick the user if they're persistent
+        # await bot.api.kick_group_member(msg.group_id, msg.sender.user_id)
+
+        return
 
 
 @bot.private_event()
