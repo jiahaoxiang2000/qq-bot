@@ -11,8 +11,10 @@ we use to use the bot to manage *group*, but the office bot need the company reg
 ### Prerequisites
 
 1. Install Python 3.7+ and pip
-2. Install required packages: `pip install -r requirements.txt`
+2. Install required packages: `pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple`
 3. Set up [NapCatQQ](https://napneko.github.io/) and make sure it's running
+
+> NOTE: `pip install ncatbot -U -i https://mirrors.aliyun.com/pypi/simple` the `ncatbot` only publish on the `aliyun` mirror, so you need to use the `-i` to install it.
 
 ### Environment Variables
 
