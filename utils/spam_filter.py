@@ -113,15 +113,39 @@ def is_advertising_in_segments(message_segments: List[Dict[str, Any]]) -> bool:
             if process_json_message(segment):
                 return True
 
-        # Check the text type segments for advertising keywords
-        if segment_type == "text":
-            content = segment.get("data", {}).get("text", "")
-            ad_keywords = ["团购", "优惠", "促销", "折扣", "抢购", "限时", "免费领取", "点击链接", "私聊"]
+    return False
 
-            for keyword in ad_keywords:
-                if keyword in content:
-                    return True
 
-        # For future expansion: check other segment types like 'text', 'image', etc.
+# Import the Chinese Ad Detector if available
+try:
+    from .chinese_ad_detector import is_chinese_ad
+
+    CHINESE_AD_DETECTOR_AVAILABLE = True
+except ImportError:
+    CHINESE_AD_DETECTOR_AVAILABLE = False
+
+
+# Enhanced version of is_advertising_in_segments that uses Chinese ad detector if available
+def is_advertising_in_segments_enhanced(message_segments: List[Dict[str, Any]]) -> bool:
+    """
+    Enhanced version that also uses the Chinese ad detector if available
+
+    Parameters
+    ----------
+    message_segments : List[Dict[str, Any]]
+        List of message segments from the message field
+
+    Returns
+    -------
+    bool
+        True if any segment contains advertising, False otherwise
+    """
+    # First check with the basic method
+    if is_advertising_in_segments(message_segments):
+        return True
+
+    # Then use the enhanced Chinese detector if available
+    if CHINESE_AD_DETECTOR_AVAILABLE:
+        return is_chinese_ad(message_segments)
 
     return False

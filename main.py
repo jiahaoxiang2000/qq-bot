@@ -4,7 +4,9 @@ from ncatbot.utils.config import config
 from ncatbot.utils.logger import get_log
 import os
 from dotenv import load_dotenv
-from utils.spam_filter import is_advertising_in_segments
+from utils.spam_filter import (
+    is_advertising_in_segments_enhanced,
+)
 
 # Load environment variables from .env file if present
 load_dotenv()
@@ -47,7 +49,7 @@ async def on_group_message(msg: GroupMessage):
     _log.info(msg)
 
     # Check for advertising in message segments
-    if hasattr(msg, "message") and is_advertising_in_segments(msg.message):
+    if hasattr(msg, "message") and is_advertising_in_segments_enhanced(msg.message):
         _log.warning(
             f"Detected advertising in group {msg.group_id} from {msg.sender.user_id}. Deleting message."
         )
