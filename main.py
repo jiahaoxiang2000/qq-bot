@@ -3,6 +3,10 @@ from ncatbot.core.message import GroupMessage, PrivateMessage
 from ncatbot.utils.config import config
 from ncatbot.utils.logger import get_log
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file if present
+load_dotenv()
 
 _log = get_log()
 
